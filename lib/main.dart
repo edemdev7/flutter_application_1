@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My Flutter App',
-      debugShowCheckedModeBanner: false, // Enlève la bannière de debug
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const MyHomePage(title: 'Binks to Binks!'),
+      home: const MyHomePage(title: 'Welcome to Flutter!'),
     );
   }
 }
@@ -42,6 +43,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+
+  // Méthode pour obtenir la date et l'heure actuelles
+  String getCurrentDateTime() {
+    final now = DateTime.now();
+    final formattedDate = DateFormat('EEEE, d MMMM y').format(now);
+    final formattedTime = DateFormat('HH:mm:ss').format(now);
+    return '$formattedDate à $formattedTime';
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -73,10 +82,12 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Hello, Flutter Enthusiast! Welcome to my first Flutter App',
+              'Hello, Flutter Enthusiast!',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 20),
+
+            // Première Card : Compteur
             Card(
               elevation: 5,
               shape: RoundedRectangleBorder(
@@ -87,12 +98,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(
                   children: [
                     const Text(
-                      'You have pushed the button ',
+                      'You have pushed the button this many times:',
                       style: TextStyle(fontSize: 18),
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      '$_counter times',
+                      '$_counter',
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     const SizedBox(height: 20),
@@ -112,6 +123,31 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             const SizedBox(height: 20),
+
+            // Deuxième Card : Date et Heure
+            Card(
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    const Icon(Icons.calendar_today, size: 30, color: Colors.blueAccent),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        getCurrentDateTime(),
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
